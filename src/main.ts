@@ -19,6 +19,7 @@ export class GameScene extends Phaser.Scene {
     public preload() {
         this.load.image("orc-man", "/assets/orangeship3.png");
         this.load.image("spark", "/assets/blue.png");
+        this.load.image("asteroid", "/assets/asteroid.png");
     }
 
     public create() {
@@ -29,6 +30,17 @@ export class GameScene extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
         this.player.setDrag(100);
         this.player.setMaxVelocity(900);
+
+        const asteroid = this.physics.add.sprite(200, 300, "asteroid");
+        asteroid.setScale(0.2);
+        asteroid.setAngularVelocity(100);
+        asteroid.setVelocity(800, 600);
+        asteroid.setBounce(0.6);
+        asteroid.setCollideWorldBounds(true);
+
+        this.player.setMaxVelocity(1800);
+        this.physics.add.collider(this.player, asteroid);
+
         this.emitter = this.add.particles("spark").createEmitter({
             angle: { min: 180, max: 360 },
             speed: 200,
